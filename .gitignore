@@ -1,0 +1,5 @@
+.env
+__pycashe__
+Lib
+Scripts
+pyvenv.cfg
