@@ -5,11 +5,8 @@ import boto3
 # ロガーの作成
 logger = logging.getLogger(__name__)
 
-# ログ出力例
-# logger.info('This is another module.')
 
-
-# 存在確認する関数
+# DBに記事の送信記録が存在するか確認する関数
 def is_in_db(url, company_id):
     # DynamoDBクライアントを初期化
     dynamodb = boto3.client("dynamodb")
@@ -28,7 +25,7 @@ def is_in_db(url, company_id):
             ProvisionedThroughput={"ReadCapacityUnits": 5, "WriteCapacityUnits": 5},
         )
 
-        # テーブルが存在しない場合=一度も送ったことがない=Trueを返す=送信処理はしない
+        # テーブルが存在しない場合 = 過去に一度も送ったことがない = Trueを返す = 送信処理はしない
         return True
 
     # 記事の存在を確認
@@ -68,22 +65,3 @@ def add_article(title, url, company_id):
         logger.info("Item added successfully")
     except Exception as e:
         logger.info(f"Error adding item: {e}")
-
-
-# テストケース
-# article = {
-#     "title": "牛乳や水で割るだけで簡単な「ネスカフェ ポーション」シリーズがパッケージを刷新！上品なバニラの香りと甘みが 豊かなコーヒーの味わいとマッチした「ネスカフェ ポーション バニララテ」を3月1日(金)新発売",
-#     "url": "https://prtimes.jp/main/html/rd/p/000000399.000004158.html",
-# }
-# article = {
-#     "title": "テスト1",
-#     "url": "https://prtimes.jp/main/html/rd/p/000000512.000004158.html",
-# }
-# article = {
-#     "title": "テスト1",
-#     "url": "https://prtimes.jp/main/html/rd/p/000000952.000004158.html",
-# }
-# company_id = 4158
-# add_article(article, company_id)
-# result = is_in_db(article, company_id)
-# logger.info(result)

@@ -11,6 +11,7 @@ class PressRelease:
         self.release_comple_date = release_comple_date
 
 
+# APIのURLから、PressReleaseオブジェクトのリストを返す関数
 def get_pr(api_url):
     response = requests.get(api_url)
     if response.status_code == 200:
@@ -25,6 +26,7 @@ def get_pr(api_url):
             updated_at = entry.get("updated_at", "")
             release_comple_date = entry.get("release_comple_date", "")
             press_release = PressRelease(id, title, url, company, updated_at, release_comple_date)
+
             pr_list.append(press_release)
         return pr_list
     else:

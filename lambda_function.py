@@ -8,38 +8,9 @@ from scraping import get_pr
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 # ロガーの作成
 logger = logging.getLogger(__name__)
-# ログ出力例
-# logger.info("This is main.")
 
-
-# ブラックリストの文字列
-blacklist_words = [
-    "ウイスキー",
-    "タコハイ",
-    "セールスタート",
-    "Coke ON",
-    "チューハイ",
-    "モルツ",
-    "メディア関係者",
-    "ビール",
-    "ワイン",
-    "アルコール",
-    "ストロングゼロ",
-    "お酒",
-    "檸檬堂",
-    "トリス",
-    "ハイボール",
-    "ほろよい",
-    "山崎",
-    "金麦",
-    "白州",
-    "知多",
-    "天然水",
-    "株式取得",
-    "プロゴルファー",
-    "文化財団",
-    "サワー",
-]
+# ブラックリストの文字列 LINE通知したくない内容を入力してください。
+blacklist_words = ["メディア関係者", "PayPay" "メルカード", "マツケンサンバ"]
 
 
 def is_in_blacklist(title):
@@ -51,7 +22,14 @@ def is_in_blacklist(title):
 
 # Lambdaのエントリーポイント
 def lambda_handler(event, context):
-    company_id_list = [4158, 10896, 33194, 74056, 1735, 42435]
+    """
+    company_id_listには、company_idを入力してください。
+    company_idとは、PRTIMESの記事URLの".html"の直前の数字のことです。
+    URL例:"https://prtimes.jp/main/html/rd/p/000000333.000129774.html"
+    このURLの場合は、129774です。
+    0埋めはあってもなくても正常に動作します。
+    """
+    company_id_list = [129774, 13971, 25121, 26386]
     for company_id in company_id_list:
         # 記事を取得する
         api_url = f"https://prtimes.jp/api/companies/{company_id}/press_releases?limit=5"

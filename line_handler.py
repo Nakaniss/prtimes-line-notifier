@@ -7,10 +7,8 @@ import requests
 # ロガーの作成
 logger = logging.getLogger(__name__)
 
-# ログ出力例
-# logger.info('This is another module.')
 
-
+# LINEの通知を行う関数
 def send_line(message):
     LINE_TOKEN = os.environ["LINE_TOKEN"]
     # LINE_TOKEN = ""
@@ -27,6 +25,7 @@ def send_line(message):
         logger.info("Failed to send message")
 
 
+# urlを短縮する関数
 def generate_shortened_url(long_url):
     try:
         s = pyshorteners.Shortener()
@@ -37,6 +36,7 @@ def generate_shortened_url(long_url):
         return long_url
 
 
+# メッセージのフォーマットを整える関数
 def format_message(title, url):
     short_url = generate_shortened_url(url)
     if len(title) > 50:
@@ -46,11 +46,3 @@ def format_message(title, url):
     else:
         message = f"{title}\n{short_url}\n"
     return message
-
-
-# テストケース
-# article = {
-#     "title": "牛乳や水で割るだけで簡単な「ネスカフェ ポーション」シリーズがパッケージを刷新！上品なバニラの香りと甘みが 豊かなコーヒーの味わいとマッチした「ネスカフェ ポーション バニララテ」を3月1日(金)新発売",
-#     "url": "https://prtimes.jp/main/html/rd/p/000000399.000004158.html",
-# }
-# format_message(title=article["title"], url=article["url"])

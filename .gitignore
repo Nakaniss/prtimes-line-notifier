@@ -1,6 +1,7 @@
-__pycashe__
+__pycache__
 Lib
 Scripts
 version
 .env
 pyvenv.cfg
+test_case.py
