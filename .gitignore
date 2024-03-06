@@ -1,5 +1,6 @@
-.env
 __pycashe__
 Lib
 Scripts
+version
+.env
 pyvenv.cfg
