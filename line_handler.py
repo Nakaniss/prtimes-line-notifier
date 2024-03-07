@@ -1,5 +1,6 @@
 import logging
 import os
+import unicodedata
 
 import pyshorteners
 import requests
@@ -38,11 +39,15 @@ def generate_shortened_url(long_url):
 
 # メッセージのフォーマットを整える関数
 def format_message(title, url):
+    # URL短縮
     short_url = generate_shortened_url(url)
-    if len(title) > 50:
+    # 全角で見にくい文字を半角に変換
+    replaced_title = unicodedata.normalize("NFKC", title)
+
+    if len(replaced_title) > 50:
         # タイトルが50文字以上の場合は短縮
-        short_title = title[:47] + "..."
-        message = f"{short_title}\n{short_url}\n"
+        short_replaced_title = replaced_title[:47] + "..."
+        message = f"\n{short_replaced_title}\n{short_url}"
     else:
-        message = f"{title}\n{short_url}\n"
+        message = f"\n{replaced_title}\n{short_url}"
     return message
